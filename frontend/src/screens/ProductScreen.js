@@ -92,7 +92,7 @@ const ProductScreen = ({ history, match: { params } }) => {
                                                 value={qty} 
                                                 onChange={(e) => setQty(e.target.value)}
                                             >
-                                            ///[0,1,2,3,4,5]
+                                            {/* [0,1,2,3,4,5] */}
                                             {[...Array(product.countInStock).keys()].map(x => (
                                                 <option key={x + 1} value={x + 1}>
                                                     {x + 1}
