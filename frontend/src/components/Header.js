@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
-import { logout } from '../actions/userActions'
+import { logout, getUserDetails } from '../actions/userActions'
 import {
     Navbar, Nav, Container, NavDropdown
 } from 'react-bootstrap'
@@ -11,6 +11,11 @@ const Header = () => {
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
+
+    useEffect(() => {
+        dispatch(getUserDetails('profile'))
+
+    }, [userInfo])
 
     const logoutHandler = () => {
         dispatch(logout())
