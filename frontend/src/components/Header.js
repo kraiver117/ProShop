@@ -15,7 +15,7 @@ const Header = () => {
     useEffect(() => {
         dispatch(getUserDetails('profile'))
 
-    }, [userInfo])
+    }, [userInfo, dispatch])
 
     const logoutHandler = () => {
         dispatch(logout())
