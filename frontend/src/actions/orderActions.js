@@ -25,7 +25,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
         }
 
         const { data } = await axios.post(
-            `api/orders`, order,
+            `/api/orders`, order,
             config
         )
 
@@ -59,7 +59,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
         }
 
         const { data } = await axios.get(
-            `api/orders/${id}`,
+            `/api/orders/${id}`,
             config
         )
 
