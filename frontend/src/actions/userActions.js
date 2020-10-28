@@ -12,9 +12,11 @@ import {
     USER_UPDATE_PROFILE_FAIL,
     USER_UPDATE_PROFILE_REQUEST,
     USER_UPDATE_PROFILE_RESET,
-    USER_UPDATE_PROFILE_SUCCESS
+    USER_UPDATE_PROFILE_SUCCESS,
+    USER_DETAILS_RESET
 } from '../constants/userConstants'
 import axios from 'axios'
+import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
 
 export const login = (email, password) => async (dispatch) => {
     try {
@@ -29,7 +31,7 @@ export const login = (email, password) => async (dispatch) => {
         }
 
         const { data } = await axios.post(
-            'api/users/login', 
+            '/api/users/login', 
             { email, password }, 
             config
         )
@@ -57,6 +59,12 @@ export const logout = () => (dispatch) => {
     dispatch({
         type: USER_LOGOUT
     })
+    dispatch({
+        type: USER_DETAILS_RESET
+    })
+    dispatch({
+        type: ORDER_LIST_MY_RESET
+    })
 }
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -72,7 +80,7 @@ export const register = (name, email, password) => async (dispatch) => {
         }
 
         const { data } = await axios.post(
-            'api/users/', 
+            '/api/users/', 
             { name, email, password }, 
             config
         )
@@ -115,7 +123,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         }
 
         const { data } = await axios.get(
-            `api/users/${id}`, 
+            `/api/users/${id}`, 
             config
         )
 
@@ -150,7 +158,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
         }
 
         const { data } = await axios.put(
-            `api/users/profile`, user,
+            `/api/users/profile`, user,
             config
         )
 
