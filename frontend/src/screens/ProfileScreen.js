@@ -30,22 +30,24 @@ const ProfileScreen = ({ history }) => {
     const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
 
     useEffect(() => {
-        dispatch(updateUserProfileReset())
-    }, [dispatch])
-
-    useEffect(() => {
         if (!userInfo) {
             history.push('/login')
         } else {
             if (!user.name) {
                 dispatch(getUserDetails('profile'))
-                dispatch(listMyOrders())
             } else {
+                if (orders) {
+                    dispatch(listMyOrders())
+                }
                 setName(user.name)
                 setEmail(user.email)
             }
         }
     }, [dispatch, history, userInfo, user])
+
+    useEffect(() => {
+        dispatch(updateUserProfileReset())
+    }, [dispatch])
 
     //Submit Handler//
     const submitHandler = (e) => {
