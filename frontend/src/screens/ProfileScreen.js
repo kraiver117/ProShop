@@ -43,7 +43,7 @@ const ProfileScreen = ({ history }) => {
                 setEmail(user.email)
             }
         }
-    }, [dispatch, history, userInfo, user])
+    }, [dispatch, history, userInfo, user, orders])
 
     useEffect(() => {
         dispatch(updateUserProfileReset())
