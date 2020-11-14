@@ -20,7 +20,10 @@ import {
     USER_LIST_RESET,
     USER_DELETE_REQUEST,
     USER_DELETE_SUCCESS,
-    USER_DELETE_FAIL
+    USER_DELETE_FAIL,
+    USER_UPDATE_SUCCESS,
+    USER_UPDATE_FAIL,
+    USER_UPDATE_REQUEST
 } from '../constants/userConstants'
 import axios from 'axios'
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
@@ -38,8 +41,8 @@ export const login = (email, password) => async (dispatch) => {
         }
 
         const { data } = await axios.post(
-            '/api/users/login', 
-            { email, password }, 
+            '/api/users/login',
+            { email, password },
             config
         )
 
@@ -90,8 +93,8 @@ export const register = (name, email, password) => async (dispatch) => {
         }
 
         const { data } = await axios.post(
-            '/api/users/', 
-            { name, email, password }, 
+            '/api/users/',
+            { name, email, password },
             config
         )
 
@@ -133,7 +136,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         }
 
         const { data } = await axios.get(
-            `/api/users/${id}`, 
+            `/api/users/${id}`,
             config
         )
 
@@ -253,8 +256,44 @@ export const deleteUser = (id) => async (dispatch, getState) => {
     }
 }
 
-export const updateUserProfileReset = () => async (dispatch) => {
+export const updateUser = (user) => async (dispatch, getState) => {
+    try {
         dispatch({
-            type: USER_UPDATE_PROFILE_RESET
+            type: USER_UPDATE_REQUEST
         })
+
+        const { userLogin: { userInfo } } = getState()
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const { data } = await axios.put(`/api/users/${user._id}`, user, config)
+
+        dispatch({
+            type: USER_UPDATE_SUCCESS
+        })
+
+        dispatch({ 
+            type: USER_DETAILS_SUCCESS, 
+            payload: data 
+        })
+
+    } catch (error) {
+        dispatch({
+            type: USER_UPDATE_FAIL,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+        })
+    }
+}
+
+export const updateUserProfileReset = () => async (dispatch) => {
+    dispatch({
+        type: USER_UPDATE_PROFILE_RESET
+    })
 }
