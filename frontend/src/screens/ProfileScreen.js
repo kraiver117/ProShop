@@ -35,15 +35,15 @@ const ProfileScreen = ({ history }) => {
         } else {
             if (!user.name) {
                 dispatch(getUserDetails('profile'))
-            } else {
                 if (orders) {
                     dispatch(listMyOrders())
                 }
+            } else {
                 setName(user.name)
                 setEmail(user.email)
             }
         }
-    }, [dispatch, history, userInfo, user])
+    }, [dispatch, history, userInfo, user, orders])
 
     useEffect(() => {
         dispatch(updateUserProfileReset())
